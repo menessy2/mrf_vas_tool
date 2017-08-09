@@ -10,8 +10,13 @@ def main():
     for page_count in range(1, total_page_counts+1):
         hashes = indexing_files(session, page_count)
         for hash in hashes:
-            while request_virustotal_scan(session, hash) == 400:
+            res = request_virustotal_scan(session, hash)
+            print("Result", res)
+            while res == 400:
+                print("Sleeping for 60s...")
                 time.sleep(60)
+                res = request_virustotal_scan(session, hash)
+                print("Result After sleeping", res)
 
 if __name__ == '__main__':
     main()
