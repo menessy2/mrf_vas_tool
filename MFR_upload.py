@@ -32,7 +32,8 @@ def upload_single_file(session, filename):
 
 def request_virustotal_scan(session, hash):
     data = "hash=" + hash
-    r = session.post(BASE_URL + VIRUSTOTAL_PATH, data=data)
+    r = session.post(BASE_URL + VIRUSTOTAL_PATH, data=data, content_type='application/x-www-form-urlencoded; '
+                                                                         'charset=UTF-8')
     return int(r.status_code)
 
 
