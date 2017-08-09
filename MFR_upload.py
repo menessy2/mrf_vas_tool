@@ -46,8 +46,9 @@ def get_page_counts(session):
 def indexing_files(session, page_id):
     final_result = []
     r = session.get(BASE_URL + INDEXING_PATH + str(page_id))
-    result = json.loads(r.text)
+    result = json.loads(r.text)['files']
     for element in result:
+        print(element)
         virustotal_id = element["virustotal_scan_id"]
         hash = element["md5"]
         if virustotal_id != '':
