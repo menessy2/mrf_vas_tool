@@ -33,7 +33,7 @@ def upload_single_file(session, filename):
 def request_virustotal_scan(session, hash):
     data = "hash=" + hash
     r = session.post(BASE_URL + VIRUSTOTAL_PATH, data=data)
-    print(r.text)
+    return int(r.status_code)
 
 
 def get_page_counts(session):
