@@ -1,12 +1,13 @@
 import requests
 import os
+import json
 from config import *
 
-LOGIN_PATH = 'src/lib/usercake/login.php'
+LOGIN_PATH = 'login.php'
 UPLOAD_PATH = 'api.php?action=uploadfiles'
 VIRUSTOTAL_PATH = 'api.php?action=virustotalscan'
-
-
+INDEXING_PATH = 'api.php?action=getfiles&page='
+STATS_PATH = 'api.php?action=getstorageinfo'
 
 
 
@@ -33,6 +34,27 @@ def request_virustotal_scan(session, hash):
     data = "hash=" + hash
     r = session.post(BASE_URL + VIRUSTOTAL_PATH, data=data)
     print(r.text)
+
+
+def get_page_counts(session):
+    r = session.get(BASE_URL + STATS_PATH )
+    return int(json.loads(r.text)['max_page'])
+
+"""
+@returns list of hashes
+"""
+def indexing_files(session, page_id):
+    final_result = []
+    r = session.get(BASE_URL + INDEXING_PATH + str(page_id))
+    result = json.loads(r.text)
+    for element in result:
+        virustotal_id = element["virustotal_scan_id"]
+        hash = element["md5"]
+        if virustotal_id != '':
+            final_result.append(hash)
+    return final_result
+
+
 
 
 def return_files_list(folder):
