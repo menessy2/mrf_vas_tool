@@ -48,11 +48,11 @@ def indexing_files(session, page_id):
     r = session.get(BASE_URL + INDEXING_PATH + str(page_id))
     result = json.loads(r.text)['files']
     for element in result:
-        print(element)
         virustotal_id = element["virustotal_scan_id"]
         hash = element["md5"]
         if virustotal_id != '':
             final_result.append(hash)
+            print(hash)
     return final_result
 
 
