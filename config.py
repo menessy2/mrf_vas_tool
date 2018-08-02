@@ -1,4 +1,4 @@
 
-BASE_URL = 'http://192.168.10.6/mrf/'
+BASE_URL = 'http://localhost/mrf/'
 USERNAME = 'admin'
-PASSWORD = 'certP@ssw0rd'
+PASSWORD = 'admin'
